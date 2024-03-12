@@ -45,14 +45,12 @@ For the SLAM and navigation, follow steps 2-8 from the Gazebo procedure but skip
 ## Results
 A key observation even from the Gazebo simulation is that Hector SLAM populates the map faster than the gmapping algorithm. As expected, there is a lot more uncertainty in the robot's position belief in real world compared to the simulated Gazebo world.
 
-### Gazebo
-![Gmapping SLAM Video](../videos/Assignment4_recordings_plots/teleop/Circle_tb.gif)
-![Gmapping Nav Video](../videos/Assignment4_recordings_plots/teleop/Circle_Teleop_bag.png)
-![Hector SLAM Video](../videos/Assignment4_recordings_plots/teleop/Circle_tb.gif)
-![Hector Nav Video](../videos/Assignment4_recordings_plots/teleop/Circle_Teleop_bag.png)
 
-### Real world
-![Gmapping SLAM Video](../videos/Assignment4_recordings_plots/teleop/Circle_tb.gif)
-![Gmapping Nav Video](../videos/Assignment4_recordings_plots/teleop/Circle_Teleop_bag.png)
-![Hector SLAM Video](../videos/Assignment4_recordings_plots/teleop/Circle_tb.gif)
-![Hector Nav Video](../videos/Assignment4_recordings_plots/teleop/Circle_Teleop_bag.png)
+### Turtlebot in Action
+
+#### SLAM using Gmapping
+
+![Gmapping SLAM Video](../videos/Assignment_4/Task_2/turtleBot_gmapping.gif)
+
+#### SLAM using Hector SLAM
+![Hector Nav Video](../videos/Assignment_4/Task_2/turtleBot_hector.gif)
