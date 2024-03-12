@@ -27,4 +27,9 @@ The results corroborate what we already know about open loop control on a turtle
 ![square plot](../videos/Assignment4_recordings_plots/teleop/Square_Teleop_bag.png)
 
 The circle is close in shape to a circle even though the bot did not go through the starting point at the end of the first loop.
-The square, on the other hand, is a lot more out of shape owing to accumulated errors arising from the robot sensors and the wheel slip on the carpeted floor.
+The square, on the other hand, is a lot more out of shape owing to the following reasons:
+  1. Inertia of the vehicle while turning
+
+  2. Coefficient of friction with the ground is not constant making it more difficult for the bot to navigate
+
+  3. Irregular torque split between the two wheels because of manufacturing irregularities.

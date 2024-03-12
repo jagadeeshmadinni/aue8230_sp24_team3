@@ -10,5 +10,6 @@ To achieve modular efficiency, the repo only contains paackage level. In order t
 
 ## Contents by package:
 ```assign2b``` - Openloop circle and square trajectory following on a Turtlebot3.
+```slam_nav``` - Simultaneous Localization and Mapping(SLAM) using Gmapping and Hector SLAM algorithms followed by navigation in both Gazebo and real world on a Turtlebot3 Burger.
 
 Specific instructions on each package are inside each directory.
