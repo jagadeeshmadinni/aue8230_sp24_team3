@@ -6,38 +6,6 @@ from math import pow, atan2, sqrt, pi
 import numpy as np
 import time
 
-'''
-def input_finder_linear(optimum):
-    match optimum:
-        case 0:
-            return 0.2
-        case 1:
-            return 0.2
-        case 2:
-            return 0
-        case 3:
-            return 0
-        case 4:
-            return 0.2
-        case _:
-            return 0
-
-def input_finder_lateral(optimum):
-    match optimum:
-        case 0:
-            return 0
-        case 1:
-            return 1
-        case 2:
-            return 1
-        case 3:
-            return 1
-        case 4:
-            return 1
-        case _:
-            return 0
-'''
-
 def callback(msg):
     dists = np.array([msg.ranges[0],msg.ranges[30],msg.ranges[90],msg.ranges[270],msg.ranges[330]])    
     dist = np.where(dists > 3.5, 3.5, dists)
@@ -45,7 +13,7 @@ def callback(msg):
     opt = np.argmax(J)
     optopt = np.min(opt)
     print ('Direction Chosen   {}'.format(optopt))
-    U = np.array([[0.2, 0.2, 0, 0, 0.2],[0, 1, 1, 1, 1]])
+    U = np.array([[0.2, 0.2, 0, 0, 0.2],[0, 1, 1, -1, -1]])
     vel_msg.linear.x = U[0][optopt]
     vel_msg.angular.z = U[1][optopt]
     vel_pub.publish(vel_msg)
