@@ -36,5 +36,4 @@ Here R is the weighting factor.
 **Disadvantages**
 - It is a very primitive controller and has discrete inputs instead of continuous ones. Although it works well for random motion, it needs to be combined with a motion planning algorithm to make it completely useful.
 
-[![Watch the video](https://i.stack.imgur.com/Vp2cE.png)]([https://youtu.be/vt5fpE0bzSY](https://github.com/JohirSuresh22/aue8230_sp24_team3/blob/main/videos/Assignment5b_obstacleAvoidance/ObstacleAvoidance.mp4)https://github.com/JohirSuresh22/aue8230_sp24_team3/blob/main/videos/Assignment5b_obstacleAvoidance/ObstacleAvoidance.mp4)
-
+https://github.com/JohirSuresh22/aue8230_sp24_team3/assets/158509706/15ac4113-3991-437f-a6e6-a478b587062a
