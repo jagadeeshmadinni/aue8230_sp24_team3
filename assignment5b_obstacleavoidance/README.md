@@ -3,6 +3,7 @@ The '''obstacleAvoidance.py''' code works as a stand-alone code to avoide obstac
 
 **LIDAR Reading**
 LIDAR reading is taken ever 3 secs in the following directions with respect to the current heading angle: 0 deg, 30 deg, 90 deg, 270 deg, 330 deg.
+
 ![IMG_0135](https://github.com/JohirSuresh22/aue8230_sp24_team3/assets/158509706/405bf748-b28b-436e-8c85-df1831d7a684)
 
 **The Predefined Input Set**
