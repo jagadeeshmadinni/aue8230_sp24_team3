@@ -13,7 +13,7 @@ def callback(msg):
     opt = np.argmax(J)
     optopt = np.min(opt)
     print ('Direction Chosen   {}'.format(optopt))
-    U = np.array([[0.2, 0.2, 0, 0, 0.2],[0, -1, -1, 1, 1]])
+    U = np.array([[0.2, 0.2, 0, 0, 0.2],[0, 1, 1, -1, -1]])
     vel_msg.linear.x = U[0][optopt]
     vel_msg.angular.z = U[1][optopt]
     vel_pub.publish(vel_msg)
