@@ -17,3 +17,4 @@ A PD yaw controller has been developed for this functionality with a constant li
 ```turtlebot3_wall_following.launch``` - Loads the world file for wall following.
 ```wall_following.launch``` - Runs the algorithm for wall following.
 ```wall_following.py``` - Pyton based code file for wall following.
+![wall_following_video](https://github.com/jagadeeshmadinni/aue8230_sp24_team3/assets/100736973/de42c6b1-fe7f-48d5-9d4b-c67a41638286)
