@@ -38,6 +38,12 @@ This ROS package implements a line-following behavior for a Turtlebot3 robot in 
     It subscribes to the RGB camera feed of the Turtlebot3 and processes the images to detect a line using color thresholding in HSV color space.
     It calculates the centroid of the detected line and computes an angular velocity command to keep the robot following the line.
     Calculates the error term for maintaining lane position.
+
+## Dependencies
+
+This ROS package relies on the following dependencies:
+
+- **OpenCV**: OpenCV (Open Source Computer Vision Library) is used for image processing and computer vision tasks. It is required for the `follow_line_step_hsv.py` node to detect lines in the camera feed and perform line-following behavior.
     
 ## Video
 
