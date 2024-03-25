@@ -18,6 +18,5 @@ A PD yaw controller has been developed for this functionality with a constant li
 ```wall_following.launch``` - Runs the algorithm for wall following.
 ```wall_following.py``` - Pyton based code file for wall following.
 
-
-https://github.com/saumil2396/ForkSaumilaue8230_sp24_team3/assets/100736973/095ceeae-509d-40a9-b598-c5177377dc24
+![wall_following_crop](https://github.com/jagadeeshmadinni/aue8230_sp24_team3/assets/100736973/9285e700-30e7-4f06-b0d2-bbab13301f7d)
 
