@@ -37,3 +37,8 @@ Here R is the weighting factor.
 - It is a very primitive controller and has discrete inputs instead of continuous ones. Although it works well for random motion, it needs to be combined with a motion planning algorithm to make it completely useful.
 
 https://github.com/JohirSuresh22/aue8230_sp24_team3/assets/158509706/15ac4113-3991-437f-a6e6-a478b587062a
+
+**Running Obstacle Avoidance**
+- Clone the package ```assignment5b_obstacleavoidance``` in desired workspace.
+- Perform ```catkin_make```, ```source devel/setup.bash```.
+- Then run the launch file ```roslaunch assignment5b_obstacleavoidance obstacleAvoidance.launch``` to launch Gazebo and run the obstacle avoidance algorithm.
