@@ -45,6 +45,7 @@ This ROS package relies on the following dependencies:
 
 - **OpenCV**: OpenCV (Open Source Computer Vision Library) is used for image processing and computer vision tasks. It is required for the `follow_line_step_hsv.py` node to detect lines in the camera feed and perform line-following behavior.
 
+
 # Installing OpenCV2 and Simulation files
 
 ## OpenCV Installation
@@ -75,6 +76,7 @@ This ROS package relies on the following dependencies:
 
   ```bash
   $ cd ~/name_of_your_ws && catkin_make
+
     
 ## Video
 
