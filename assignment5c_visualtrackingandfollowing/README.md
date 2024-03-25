@@ -1,4 +1,4 @@
-# ROS Package: Assignment5c_visualtrackingandfollowing
+# ROS Package: assignment5c_visualtrackingandfollowing
 
 This ROS package implements a line-following behavior for a Turtlebot3 robot in a simulated Gazebo environment. The package consists of two main files:
 
