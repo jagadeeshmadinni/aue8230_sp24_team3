@@ -15,6 +15,10 @@ The required videos for assignment 4 can be found inside the folder ```videos```
 
 ```slam_nav``` - Simultaneous Localization and Mapping(SLAM) using Gmapping and Hector SLAM algorithms followed by navigation in both Gazebo and real world on a Turtlebot3 Burger.
 
-```assignment5c_visualtrackingandfollowing``` - Line-following behavior for a Turtlebot3 robot in a simulated Gazebo environment
+```assignment5a_wall_following``` - A wall following Turtlebot3 implementation in a simulated Gazebo world using LIDAR scan data.
+
+```assignment5b_obstacleavoidance``` - Obstacle Avoidance implementation on a Turtlebot3 running indefinitely in a simulated world.
+
+```assignment5c_visualtrackingandfollowing``` - Line-following behavior for a Turtlebot3 robot in a simulated Gazebo environment.
 
 Specific instructions on each package are inside each directory.
