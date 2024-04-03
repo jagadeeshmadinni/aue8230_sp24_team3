@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>wall_following</name>
+  <name>assignment5a_wall_following</name>
   <version>0.0.0</version>
-  <description>The wall_following package</description>
+  <description>The assignment5a_wall_following package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->

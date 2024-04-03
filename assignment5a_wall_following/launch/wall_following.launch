@@ -1,5 +1,5 @@
 <launch>
-    <node pkg="wall_following" type="wall_following.py" name="wall_following">
+    <node pkg="assignment5a_wall_following" type="wall_following.py" name="wall_following">
         <param name="radius" value="2"/>
         <param name="y" value="1"/>
         <param name="omega" value="0.2"/>
