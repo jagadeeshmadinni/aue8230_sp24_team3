@@ -10,6 +10,7 @@ class WallFollower:
         self.move = Twist()
         self.pub = rospy.Publisher("/cmd_vel", Twist, queue_size=10)
         self.sub = rospy.Subscriber("/scan", LaserScan, self.wallfollow)
+        rospy.on_shutdown(self.myhook)
     
     def PID(self, error, error_prev, Kp=0.9, Kd=1):
       
@@ -22,24 +23,36 @@ class WallFollower:
 
         right = sum(scan[-90:-16])/len(scan[-90:-16])   # Average range
         left = sum(scan[16:90])/len(scan[16:90])        # Average range
-        front = sum(scan[0:15]+scan[-1:-15])/len(scan[0:15]+scan[-1:-15])     # Average range
-         
+        front = sum(scan[0:15]+scan[-1:-15])/len(scan[0:15]+scan[-1:-15])   # Average range
+        Lf = sum(scan[13:18])/len(scan[13:18])          # Average range
+        Rf = sum(scan[-18:-13])/len(scan[-18:-13])      # Average range
+
         linear_vel = 0.15
         angular_vel = 0
         front_threshold = 0.5
+        obst_threshold = 0.3
         
         error = left - right
         error_prev = error
 
+        obs_dist = abs(Lf-Rf)
+
         self.move.linear.x = linear_vel
-        self.move.angular.z = angular_vel + self.PID(error, error_prev) # Yaw PD control
+        self.move.angular.z = angular_vel + self.PID(error, error_prev)     # Yaw PD control
         print("Angular Velocity is %s" % self.move.angular.z)
 
-        if front<front_threshold:
+        if front<front_threshold and obs_dist<obst_threshold:
             self.move.linear.x = 0
             print("Bot is near obstacle")
         #else:
             #self.move.linear.x = linear_vel
+
+    # https://get-help.theconstruct.ai/t/how-to-stop-your-robot-when-ros-is-shutting-down/225
+    def myhook(self):    
+        print("shutdown time!")
+        self.move.linear.x = 0
+        self.move.angular.z = 0
+        self.pub.publish(self.move)
         
     def run(self):
         while not rospy.is_shutdown():
