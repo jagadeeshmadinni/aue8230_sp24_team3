@@ -93,7 +93,7 @@ class LineFollower(object):
         self.bridge_object = CvBridge()
         self.image_sub = rospy.Subscriber("/camera/rgb/image_raw",Image,self.camera_callback)
         self.moveTurtlebot3_object = MoveTurtlebot3()
-        rospy.on_shutdown(self.myhook)
+        #rospy.on_shutdown(self.myhook)
 
     def camera_callback(self, data):
 
@@ -117,8 +117,8 @@ class LineFollower(object):
         """
 
         # Threshold the HSV image to get only yellow colors
-        lower_yellow = np.array([190,60,50])	
-        upper_yellow = np.array([220,80,75])
+        lower_yellow = np.array([20,100,100])		
+        upper_yellow = np.array([50,255,255])
         mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
 
         # Calculate centroid of the blob of binary image using ImageMoments
@@ -161,12 +161,13 @@ class LineFollower(object):
     def clean_up(self):
         self.moveTurtlebot3_object.clean_class()
         cv2.destroyAllWindows()
-
+'''
     def myhook(self):    
         print("shutdown time!")
         self.twist_object.linear.x = 0
         self.twist_object.angular.z = 0
         self.pub.publish(self.twist_object)
+'''
 
 class Autonomy_Final:
 
@@ -190,6 +191,20 @@ class Autonomy_Final:
             self.Velocity_Publisher.publish(self.velocity)
 '''
 
+def main():
+    rospy.init_node('line_following_node', anonymous=True)
+    line_follower_object = LineFollower()
+    rate = rospy.Rate(2)
+    ctrl_c = False
+    def shutdownhook():
+        # Works better than rospy.is_shutdown()
+        line_follower_object.clean_up()
+        rospy.loginfo("Shutdown time!")
+        ctrl_c = True
+    rospy.on_shutdown(shutdownhook)
+    while not ctrl_c:
+        rate.sleep()
+
 def motion_planner(self):
     # Start the supervisory node
     self.Autonomy = Autonomy_Final()
@@ -201,11 +216,7 @@ def motion_planner(self):
 
         # Check for obstacles and line
         self.Wall_Following_object = WallFollower()
-        self.line_follower_object = LineFollower()
-        rate = rospy.Rate(2)
-        ctrl_c = False
-        while not ctrl_c:
-            rate.sleep()
+        self.Line_object = main()
 
         # Set velocity according to wall/line following
         if self.Wall_Following_object.wallfollow.scan != 0:
@@ -213,10 +224,10 @@ def motion_planner(self):
             self.Autonomy.Velocity_Publisher.publish(self.Autonomy.velocity)
         else:
             '''
-            Shutdown line_following_node
+            Shutdown wall_following_node
             Start stop sign detection
             ENTER CODE
             '''
 
-            self.Autonomy.velocity = self.line_follower_object.twist_object
+            self.Autonomy.velocity = self.Line_object.line_follower_object.twist_object
             self.Autonomy.Velocity_Publisher.publish(self.Autonomy.velocity)
