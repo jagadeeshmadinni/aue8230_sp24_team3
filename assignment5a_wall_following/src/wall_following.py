@@ -3,6 +3,7 @@
 import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
+#error_prev = 0
 
 class WallFollower:
     def __init__(self):
@@ -12,9 +13,10 @@ class WallFollower:
         self.sub = rospy.Subscriber("/scan", LaserScan, self.wallfollow)
         rospy.on_shutdown(self.myhook)
     
-    def PID(self, error, error_prev, Kp=0.9, Kd=1):
+    def PID(self, error, Kp=0.9):
       
-        return Kp * error + Kd*(error-error_prev)
+        #return Kp * error + Kd*(error-error_prev)
+        return Kp * error
     
     def wallfollow(self, data):
         lidar_scan = list(data.ranges[0:359])
@@ -33,12 +35,11 @@ class WallFollower:
         obst_threshold = 0.3
         
         error = left - right
-        error_prev = error
 
         obs_dist = abs(Lf-Rf)
 
         self.move.linear.x = linear_vel
-        self.move.angular.z = angular_vel + self.PID(error, error_prev)     # Yaw PD control
+        self.move.angular.z = angular_vel + self.PID(error)     # Yaw P control
         print("Angular Velocity is %s" % self.move.angular.z)
 
         if front<front_threshold and obs_dist<obst_threshold:
@@ -46,6 +47,9 @@ class WallFollower:
             print("Bot is near obstacle")
         #else:
             #self.move.linear.x = linear_vel
+
+        #error_prev = error
+
 
     # https://get-help.theconstruct.ai/t/how-to-stop-your-robot-when-ros-is-shutting-down/225
     def myhook(self):    
