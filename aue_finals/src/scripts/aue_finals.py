@@ -117,8 +117,10 @@ class LineFollower(object):
         """
 
         # Threshold the HSV image to get only yellow colors
+
         lower_yellow = np.array([190,60,50])	
         upper_yellow = np.array([220,80,75])
+
         mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
 
         # Calculate centroid of the blob of binary image using ImageMoments
@@ -168,6 +170,7 @@ class LineFollower(object):
         self.twist_object.angular.z = 0
         self.pub.publish(self.twist_object)
 
+
 class Autonomy_Final:
 
     def __init__(self):
@@ -201,22 +204,11 @@ def motion_planner(self):
 
         # Check for obstacles and line
         self.Wall_Following_object = WallFollower()
-        self.line_follower_object = LineFollower()
-        rate = rospy.Rate(2)
-        ctrl_c = False
-        while not ctrl_c:
-            rate.sleep()
 
         # Set velocity according to wall/line following
         if self.Wall_Following_object.wallfollow.scan != 0:
             self.Autonomy.velocity = self.Wall_Following_object.move
             self.Autonomy.Velocity_Publisher.publish(self.Autonomy.velocity)
         else:
-            '''
-            Shutdown line_following_node
-            Start stop sign detection
-            ENTER CODE
-            '''
 
-            self.Autonomy.velocity = self.line_follower_object.twist_object
             self.Autonomy.Velocity_Publisher.publish(self.Autonomy.velocity)
