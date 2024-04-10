@@ -1,0 +1,3 @@
+<launch>  
+  <node pkg="aue_finals" type="aue_finals.py" name="Finals_File" output="screen" />
+</launch>
