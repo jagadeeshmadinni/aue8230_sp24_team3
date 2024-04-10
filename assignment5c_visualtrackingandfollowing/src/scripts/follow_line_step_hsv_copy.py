@@ -34,8 +34,8 @@ class LineFollower(object):
         """
 
         # Threshold the HSV image to get only yellow colors
-        lower_yellow = np.array([190,60,50])	
-        upper_yellow = np.array([220,80,75])
+        lower_yellow = np.array([100,150,0])	
+        upper_yellow = np.array([140,255,255])
         mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
 
         # Calculate centroid of the blob of binary image using ImageMoments
@@ -50,7 +50,7 @@ class LineFollower(object):
         
         # Draw the centroid in the resultut image
         #cv2.circle(img, center, radius, color[, thickness[, lineType[, shift]]]) 
-        cv2.circle(mask,(int(cx), int(cy)), 5,(0,0,255),-1)
+        cv2.circle(mask,(int(cx), int(cy)), 5,(255,0,0),-1)
         cv2.imshow("Original", hsv)
         cv2.imshow("MASK", mask)
         cv2.waitKey(1)
