@@ -10,8 +10,9 @@ from move_robot import MoveTurtlebot3
 class LineFollower(object):
 
     def __init__(self):
-        self.bridge_object = CvBridge()
-        self.image_sub = rospy.Subscriber("/camera/rgb/image_raw",Image,self.camera_callback)
+        self.bridge_object = CvBridge() 
+        #self.image_sub = rospy.Subscriber("/camera/rgb/image_raw",Image,self.camera_callback)
+        self.image_sub = rospy.Subscriber("/camera/image",Image,self.camera_callback)
         self.moveTurtlebot3_object = MoveTurtlebot3()
 
     def camera_callback(self, data):
@@ -33,8 +34,11 @@ class LineFollower(object):
         """
 
         # Threshold the HSV image to get only yellow colors
-        lower_yellow = np.array([20,100,100])	
-        upper_yellow = np.array([50,255,255])
+        #lower_yellow = np.array([20,100,100])	#for gazebo
+        #upper_yellow = np.array([50,255,255])
+
+        lower_yellow = np.array([15,48,123])	#for real world
+        upper_yellow = np.array([90,255,255])
         mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
 
         # Calculate centroid of the blob of binary image using ImageMoments
@@ -58,12 +62,13 @@ class LineFollower(object):
         twist_object = Twist()
         
         #calculating the error term
-        twist_object.linear.x = 0.224
+        #twist_object.linear.x = 0.1
+        twist_object.linear.x = 0.05
         
         #distance of the centroid of the blob w.r.t image centre
         err = width/2 - cx
         if counter == 1:
-               twist_object.angular.z = 0.0005*err
+               twist_object.angular.z = 0.0008*err
         elif counter == 0:
                twist_object.angular.z = -0.01
 
@@ -80,7 +85,7 @@ class LineFollower(object):
 def main():
     rospy.init_node('line_following_node', anonymous=True)
     line_follower_object = LineFollower()
-    rate = rospy.Rate(5)
+    rate = rospy.Rate(2)
     ctrl_c = False
     def shutdownhook():
         # Works better than rospy.is_shutdown()
