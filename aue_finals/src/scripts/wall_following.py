@@ -3,6 +3,7 @@
 import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
+import numpy as np
 
 class WallFollower:
     def __init__(self):
@@ -20,6 +21,7 @@ class WallFollower:
         lidar_scan = list(data.ranges[0:359])
         scan = [x for x in lidar_scan if x < 3]     # Filtering garbage values
         #scan = lidar_scan
+        scan = np.where(scan == 0, 10, scan)
 
         right = sum(scan[-90:-16])/len(scan[-90:-16])   # Average range
         left = sum(scan[16:90])/len(scan[16:90])        # Average range
