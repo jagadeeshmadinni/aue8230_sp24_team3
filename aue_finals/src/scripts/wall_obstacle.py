@@ -2,28 +2,54 @@
 
 import rospy
 from geometry_msgs.msg import Twist
-from sensor_msgs.msg import LaserScan
+import numpy as np
 
 class WallFollower:
     def __init__(self):
-        #rospy.init_node('wall_follower')
-        self.move = Twist()
+        self.move_wall = Twist()
 
-    def follow_wall(self,begin_flag):
+    def follow_wall(self,data):
+        #lidar_scan = list(data.ranges[0:359])
+        scan = [x for x in data if x < 3]     # Filtering garbage values
+        scan = np.where(data == 0, 10, data)
 
-        if(begin_flag==True):
-            self.move.linear.x = 1
-            self.move.linear.y = 1
-            self.move.linear.z = 0
-            self.move.angular.x = 0
-            self.move.angular.y = 0
-            self.move.angular.z = 1
+        print("scan is %s" % scan)
 
-        else:
-            self.move.linear.x = 0
-            self.move.linear.y = 0
-            self.move.linear.z = 0
-            self.move.angular.x = 0
-            self.move.angular.y = 0
-            self.move.angular.z = 0
-        return self.move
+        right = sum(scan[-90:-16])/len(scan[-90:-16])   # Average range
+        left = sum(scan[16:90])/len(scan[16:90])        # Average range
+        #front = sum(scan[0:15]+scan[-1:-15])/len(scan[0:15]+scan[-1:-15])   # Average range
+        Lf = sum(scan[13:18])/len(scan[13:18])          # Average range
+        Rf = sum(scan[-18:-13])/len(scan[-18:-13])      # Average range
+
+        linear_vel = 0.15
+        angular_vel = 0
+        front_threshold = 0.5
+        obst_threshold = 0.1
+        
+        error = left - right
+
+        obs_dist = abs(Lf-Rf)
+
+        print("Angular Velocity is %s" % self.move_wall.angular.z)
+
+        #if front<front_threshold or obs_dist<obst_threshold:
+        if obs_dist<obst_threshold:
+            self.move_wall.linear.x = 0
+            print("Bot is near obstacle")
+
+        #if(begin_flag==True):
+        self.move_wall.linear.z = 0
+        self.move_wall.linear.y = 0
+        self.move_wall.linear.x = linear_vel
+        self.move_wall.angular.x = 0
+        self.move_wall.angular.y = 0
+        self.move_wall.angular.z = angular_vel + 0.9*error
+
+        #else:
+        #    self.move_wall.linear.x = 0
+        #    self.move_wall.linear.y = 0
+        #    self.move_wall.linear.z = 0
+        #    self.move_wall.angular.x = 0
+        #    self.move_wall.angular.y = 0
+        #    self.move_wall.angular.z = 0
+        return self.move_wall

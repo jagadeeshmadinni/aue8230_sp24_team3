@@ -9,12 +9,14 @@ class Autonomy_Final:
     def __init__(self):
         rospy.init_node('i_am_groot', anonymous=True)
         self.velocity = Twist()
+        zeros = [0]*360
+        self.lidar_data = zeros
         self.Velocity_Publisher = rospy.Publisher("/cmd_vel", Twist, queue_size=10)
-        #self.Range_Subscriber = rospy.Subscriber("/scan", LaserScan, self.Wall_Following_object.wallfollow)
+        self.Range_Subscriber = rospy.Subscriber("/scan", LaserScan, self.range_callback)
         #self.Image_Subscriber = rospy.Subscriber("/camera/rgb/image_raw",Image,self.Line_Following_object.camera_callback)
         rospy.on_shutdown(self.Shutdown_callback)
         self.last_cmdvel_command = Twist()
-        self._cmdvel_pub_rate = rospy.Rate(10)
+        self._cmdvel_pub_rate = rospy.Rate(3)
 
     def Shutdown_callback(self):
         print("Shutting down now")
@@ -26,6 +28,9 @@ class Autonomy_Final:
     def cmdvel_callback(self,msg):
         self.last_cmdvel_command = msg
     
+    def range_callback(self,msg):
+        self.lidar_data = list(msg.ranges[0:359])
+    '''
     def compare_twist_commands(self,twist1,twist2):
         LX = twist1.linear.x == twist2.linear.x
         LY = twist1.linear.y == twist2.linear.y
@@ -37,15 +42,15 @@ class Autonomy_Final:
         if not equal:
             rospy.logwarn("The Current Twist is not the same as the one sent, Resending")
         return equal
-
+        ''' 
     def move_robot(self, twist_object):
         # We make this to avoid Topic loss, specially at the start
-        current_equal_to_new = False
-        while (not (current_equal_to_new) ):
-            self.Velocity_Publisher.publish(twist_object)
-            self._cmdvel_pub_rate.sleep()
-            current_equal_to_new = self.compare_twist_commands(twist1=self.last_cmdvel_command,
-                                    twist2=twist_object)
+        '''current_equal_to_new = False
+        while (not (current_equal_to_new) ):'''
+        self.Velocity_Publisher.publish(twist_object)
+        self._cmdvel_pub_rate.sleep()
+        #current_equal_to_new = self.compare_twist_commands(twist1=self.last_cmdvel_command,
+                                #twist2=twist_object)
                                     
     def clean_class(self):
         # Stop Robot
@@ -56,15 +61,16 @@ class Autonomy_Final:
 
     def motion_planner(self):
         # Start the supervisory node
-        self.Autonomy = Autonomy_Final()
+        #self.Autonomy = Autonomy_Final()
+        #lidar_scan = list(data_lidar.ranges[0:359])
         endMission = False
         switch_flag = True
         while not rospy.is_shutdown():
             print("Mission commenced")
             while(not endMission):
                 # Check for obstacles and line
-                self.Wall_Following_object = WallFollower()
-                cmd_vel = self.Wall_Following_object.follow_wall(switch_flag)
+                Wall_Following_object = WallFollower()
+                cmd_vel = Wall_Following_object.follow_wall(data=self.lidar_data)
                 self.move_robot(cmd_vel)
 
 if __name__ == "__main__":
