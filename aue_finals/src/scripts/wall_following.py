@@ -12,9 +12,9 @@ class WallFollower:
         self.sub = rospy.Subscriber("/scan", LaserScan, self.wallfollow)
         rospy.on_shutdown(self.myhook)
     
-    def PID(self, error, error_prev, Kp=0.9, Kd=1):
+    def PID(self, error, Kp=0.9):
       
-        return Kp * error + Kd*(error-error_prev)
+        return Kp * error
     
     def wallfollow(self, data):
         lidar_scan = list(data.ranges[0:359])
@@ -30,18 +30,18 @@ class WallFollower:
         linear_vel = 0.15
         angular_vel = 0
         front_threshold = 0.5
-        obst_threshold = 0.3
+        obst_threshold = 0.1
         
         error = left - right
-        error_prev = error
+        #error_prev = error
 
         obs_dist = abs(Lf-Rf)
 
         self.move.linear.x = linear_vel
-        self.move.angular.z = angular_vel + self.PID(error, error_prev)     # Yaw PD control
+        self.move.angular.z = angular_vel + self.PID(error)     # Yaw P control
         print("Angular Velocity is %s" % self.move.angular.z)
 
-        if front<front_threshold and obs_dist<obst_threshold:
+        if front<front_threshold or obs_dist<obst_threshold:
             self.move.linear.x = 0
             print("Bot is near obstacle")
         #else:

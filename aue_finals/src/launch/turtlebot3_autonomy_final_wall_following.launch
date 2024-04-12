@@ -1,0 +1,3 @@
+<launch>  
+  <node pkg="aue_finals" type="wall_following.py" name="Finals_Wall_Following" output="screen" />
+</launch>
