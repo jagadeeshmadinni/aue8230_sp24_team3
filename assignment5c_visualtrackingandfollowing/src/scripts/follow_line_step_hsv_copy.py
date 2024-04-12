@@ -11,7 +11,7 @@ class LineFollower(object):
 
     def __init__(self):
         self.bridge_object = CvBridge()
-        self.image_sub = rospy.Subscriber("/camera/rgb/image_raw",Image,self.camera_callback)
+        self.image_sub = rospy.Subscriber("/camera/rgb/image",Image,self.camera_callback)
         self.moveTurtlebot3_object = MoveTurtlebot3()
         rospy.on_shutdown(self.myhook)
 
@@ -34,8 +34,10 @@ class LineFollower(object):
         """
 
         # Threshold the HSV image to get only yellow colors
-        lower_yellow = np.array([100,150,0])	
-        upper_yellow = np.array([140,255,255])
+        #lower_yellow = np.array([10,50,50])	
+        #upper_yellow = np.array([90,255,255])
+        lower_yellow = np.array([15,48,123])	
+        upper_yellow = np.array([90,255,255])
         mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
 
         # Calculate centroid of the blob of binary image using ImageMoments
@@ -50,7 +52,7 @@ class LineFollower(object):
         
         # Draw the centroid in the resultut image
         #cv2.circle(img, center, radius, color[, thickness[, lineType[, shift]]]) 
-        cv2.circle(mask,(int(cx), int(cy)), 5,(255,0,0),-1)
+        cv2.circle(mask,(int(cx), int(cy)), 5,(0,0,255),-1)
         cv2.imshow("Original", hsv)
         cv2.imshow("MASK", mask)
         cv2.waitKey(1)
@@ -70,7 +72,8 @@ class LineFollower(object):
 
         #print(width/2,cx)
         #rospy.loginfo("ANGULAR VALUE SENT===>"+str(twist_object.angular.z))
-        rospy.loginfo("ERROR SENT===>"+str(error))
+        #rospy.loginfo("ERROR SENT===>"+str(error))
+        rospy.loginfo("Angular Velocity===>"+str(twist_object.angular.z))
         #rospy.loginfo(err)
         # Make it start turning
         self.moveTurtlebot3_object.move_robot(twist_object)
