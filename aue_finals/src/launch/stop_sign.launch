@@ -1,0 +1,9 @@
+<launch>
+
+  <node name="stop_sign_detect" pkg="aue_finals" type="live_yolo.py" cwd="node"/>
+  
+</launch>
+
+
+
+
