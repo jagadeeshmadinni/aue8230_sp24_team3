@@ -16,7 +16,7 @@ class Autonomy_Final:
         #self.Image_Subscriber = rospy.Subscriber("/camera/rgb/image_raw",Image,self.Line_Following_object.camera_callback)
         rospy.on_shutdown(self.Shutdown_callback)
         self.last_cmdvel_command = Twist()
-        self._cmdvel_pub_rate = rospy.Rate(3)
+        self._cmdvel_pub_rate = rospy.Rate(1)
 
     def Shutdown_callback(self):
         print("Shutting down now")
@@ -30,8 +30,8 @@ class Autonomy_Final:
     
     def range_callback(self,msg):
         self.lidar_data = list(msg.ranges[0:359])
-    '''
-    def compare_twist_commands(self,twist1,twist2):
+    
+    '''def compare_twist_commands(self,twist1,twist2):
         LX = twist1.linear.x == twist2.linear.x
         LY = twist1.linear.y == twist2.linear.y
         LZ = twist1.linear.z == twist2.linear.z
@@ -41,22 +41,21 @@ class Autonomy_Final:
         equal = LX and LY and LZ and AX and AY and AZ
         if not equal:
             rospy.logwarn("The Current Twist is not the same as the one sent, Resending")
-        return equal
-        ''' 
+        return equal'''
+        
     def move_robot(self, twist_object):
         # We make this to avoid Topic loss, specially at the start
-        '''current_equal_to_new = False
-        while (not (current_equal_to_new) ):'''
+        #current_equal_to_new = False
+        #hile (not (current_equal_to_new) ):
         self.Velocity_Publisher.publish(twist_object)
         self._cmdvel_pub_rate.sleep()
-        #current_equal_to_new = self.compare_twist_commands(twist1=self.last_cmdvel_command,
-                                #twist2=twist_object)
-                                    
-    def clean_class(self):
+            #current_equal_to_new = self.compare_twist_commands(twist1=self.last_cmdvel_command,twist2=twist_object)
+    
+    '''def clean_class(self):
         # Stop Robot
         twist_object = Twist()
         twist_object.angular.z = 0.0
-        self.move_robot(twist_object)
+        self.move_robot(twist_object)'''
 
 
     def motion_planner(self):
