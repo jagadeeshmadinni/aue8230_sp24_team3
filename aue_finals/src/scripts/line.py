@@ -60,4 +60,4 @@ class LineFollower():
                twist_object.angular.z = 0.0008*error
         elif counter == 0:
                twist_object.angular.z = -0.01
-        return twist_object
+        return twist_object, error
