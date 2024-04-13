@@ -16,7 +16,11 @@ class Autonomy_Final:
         #self.Image_Subscriber = rospy.Subscriber("/camera/rgb/image_raw",Image,self.Line_Following_object.camera_callback)
         rospy.on_shutdown(self.Shutdown_callback)
         self.last_cmdvel_command = Twist()
+<<<<<<< HEAD
         #self._cmdvel_pub_rate = rospy.Rate(1)
+=======
+        #self._cmdvel_pub_rate = rospy.Rate(3)
+>>>>>>> 2bb1907b1f07648ae308df6c2e73cb4bacf489d9
 
     def Shutdown_callback(self):
         print("Shutting down now")
@@ -30,24 +34,10 @@ class Autonomy_Final:
     
     def range_callback(self,msg):
         self.lidar_data = list(msg.ranges[0:359])
-    
-    '''def compare_twist_commands(self,twist1,twist2):
-        LX = twist1.linear.x == twist2.linear.x
-        LY = twist1.linear.y == twist2.linear.y
-        LZ = twist1.linear.z == twist2.linear.z
-        AX = twist1.angular.x == twist2.angular.x
-        AY = twist1.angular.y == twist2.angular.y
-        AZ = twist1.angular.z == twist2.angular.z
-        equal = LX and LY and LZ and AX and AY and AZ
-        if not equal:
-            rospy.logwarn("The Current Twist is not the same as the one sent, Resending")
-        return equal'''
-        
+         
     def move_robot(self, twist_object):
-        # We make this to avoid Topic loss, specially at the start
-        #current_equal_to_new = False
-        #hile (not (current_equal_to_new) ):
         self.Velocity_Publisher.publish(twist_object)
+<<<<<<< HEAD
         #self._cmdvel_pub_rate.sleep()
             #current_equal_to_new = self.compare_twist_commands(twist1=self.last_cmdvel_command,twist2=twist_object)
     
@@ -58,6 +48,9 @@ class Autonomy_Final:
         self.move_robot(twist_object)'''
 
 
+=======
+                                    
+>>>>>>> 2bb1907b1f07648ae308df6c2e73cb4bacf489d9
     def motion_planner(self):
         # Start the supervisory node
         #self.Autonomy = Autonomy_Final()
