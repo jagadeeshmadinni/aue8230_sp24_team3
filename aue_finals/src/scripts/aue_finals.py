@@ -16,7 +16,7 @@ class Autonomy_Final:
         #self.Image_Subscriber = rospy.Subscriber("/camera/rgb/image_raw",Image,self.Line_Following_object.camera_callback)
         rospy.on_shutdown(self.Shutdown_callback)
         self.last_cmdvel_command = Twist()
-        self._cmdvel_pub_rate = rospy.Rate(1)
+        #self._cmdvel_pub_rate = rospy.Rate(1)
 
     def Shutdown_callback(self):
         print("Shutting down now")
@@ -48,7 +48,7 @@ class Autonomy_Final:
         #current_equal_to_new = False
         #hile (not (current_equal_to_new) ):
         self.Velocity_Publisher.publish(twist_object)
-        self._cmdvel_pub_rate.sleep()
+        #self._cmdvel_pub_rate.sleep()
             #current_equal_to_new = self.compare_twist_commands(twist1=self.last_cmdvel_command,twist2=twist_object)
     
     '''def clean_class(self):
