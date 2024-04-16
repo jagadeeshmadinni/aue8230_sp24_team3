@@ -1,0 +1,5 @@
+<launch>
+  <machine name="turtle3" address="192.168.50.121" env-loader="/catkin_ws/env.sh" user="192.168.50.121" password="turtlebot" default="true"/>
+  
+  <include machine="turtle3" file="$(find turtlebot3_bringup)/launch/turtlebot3_robot.launch" />
+</launch>
