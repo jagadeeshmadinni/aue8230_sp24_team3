@@ -34,7 +34,8 @@ class WallFollower:
         left3 = sum(scan[16:39])/len(scan[16:39])   # Average range
         left = min(left1,left2,left3)
 
-        front = min(scan[0:10]+scan[-1:-10])
+        front = min(scan[0:20]+scan[-1:-20])
+        front_stop_sign = min(scan[0:30]+scan[-1:-30])
         Lf = min(scan[13:18])          # Average range
         Rf = min(scan[-18:-13])      # Average range
 
@@ -58,4 +59,4 @@ class WallFollower:
             self.move_wall.linear.x = 0
             #print("Bot is near obstacle")
 
-        return self.move_wall, front
+        return self.move_wall, front, front_stop_sign

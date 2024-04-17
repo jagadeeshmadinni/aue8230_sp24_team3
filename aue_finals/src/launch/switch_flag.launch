@@ -1,6 +1,5 @@
 <launch>
 
-  <node name="i_am_groot" pkg="aue_finals" type="aue_finals_Wall_Obstacle_ROS_Image_copy.py" cwd="node"/>
   <node name="switch_flag_node" pkg="aue_finals" type="switch_flag_code.py" output="screen"/>
   
 </launch>

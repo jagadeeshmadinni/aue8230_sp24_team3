@@ -14,13 +14,13 @@ class LineFollower():
     def track_line(self, flipped_img):
         # We get image dimensions and crop the parts of the image we dont need
 
-        img = cv2.flip(flipped_img,-1) #for real world
-        img = cv2.fastNlMeansDenoisingColored(img,None,10,10,7,15)
-        #img = flipped_img #for gazebo
+        #img = cv2.flip(flipped_img,-1) #for real world
+        #img = cv2.fastNlMeansDenoisingColored(img,None,10,10,7,15)
+        img = flipped_img #for gazebo
         height, width, channels = img.shape
-        crop_img = img[int((height/2)+170):int((height/2)+200)][1:int(width)]
-        start_point = (0,int(height/2)+170)
-        end_point = (int(width),int(height/2)+200)
+        crop_img = img[int((height/2)+100):int((height/2)+130)][1:int(width)]
+        start_point = (0,int(height/2)+100)
+        end_point = (int(width),int(height/2)+130)
         color = (255,0,0)
         cv2.rectangle(img,start_point,end_point,color,3)
         cv2.imshow("Cropped box",img)
@@ -36,18 +36,8 @@ class LineFollower():
 
         # Threshold the HSV image to get only yellow colors
 
-        #lower_yellow = np.array([9,15,40])	
-        #upper_yellow = np.array([42,220,197])
-
-        # Updated values
-        #lower_yellow = np.array([18,15,40])	
-        #upper_yellow = np.array([42,220,197])
-
-        lower_yellow = np.array([20,27,32])	
-        upper_yellow = np.array([39,209,163])
-
-        #lower_yellow = np.array([24,64,61])	
-        #upper_yellow = np.array([69,228,197])
+        lower_yellow = np.array([15,48,123])
+        upper_yellow = np.array([90,255,255])
         mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
 
         # Calculate centroid of the blob of binary image using ImageMoments
@@ -59,8 +49,6 @@ class LineFollower():
         except ZeroDivisionError:
             cx, cy = height/2, width/2
             counter = 0
-        
-        print("Area of blob %s" % m['m00'])
         
         # Draw the centroid in the resultut image
         #cv2.circle(img, center, radius, color[, thickness[, lineType[, shift]]]) 

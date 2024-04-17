@@ -1,5 +1,0 @@
-<launch>
-
-  <node name="i_am_groot" pkg="aue_finals" type="aue_finals.py" cwd="node" output="screen"/>
-  
-</launch>
