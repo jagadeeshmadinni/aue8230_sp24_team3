@@ -70,6 +70,7 @@ class Autonomy_Final:
         previous = 0
         previous_front = 0
         stop_sign_flag = False
+        stop_sign_done = False
         stop_sign_threshold = 0.5
         Line_Blob = 0
         image_hub = imagezmq.ImageHub()
@@ -77,7 +78,7 @@ class Autonomy_Final:
         Line_Following_object = LineFollower()
         Stop_Sign_Object = StopSign()
         #print("Mission commenced")
-        rate = rospy.Rate(5)
+        rate = rospy.Rate(2)
         while not rospy.is_shutdown():
 
             # Check for obstacles and line
@@ -86,13 +87,11 @@ class Autonomy_Final:
                 cv2.waitKey(1)
                 #image_hub.send_reply(b'OK')
                 #cv2.imshow(rpi_name, cv_image)
-                cmd_vel_wall, front = Wall_Following_object.follow_wall(data=self.lidar_data)   
+                cmd_vel_wall, front, front_stop_sign = Wall_Following_object.follow_wall(data=self.lidar_data)   
                 cmd_vel_line, error_line = Line_Following_object.track_line(flipped_img=self.cv_image)
                 stop_sign_flag,bbox_coords = Stop_Sign_Object.stop_sign_detect(self.cv_image)
                 self.stop_sign_pub.publish(stop_sign_flag)
                 self.bbox_pub.publish(Int32MultiArray(data=bbox_coords))
-
-
 
                 # Check for the error published by line following algorithm
                 error_diff =  np.append(previous,error_line)
@@ -107,8 +106,7 @@ class Autonomy_Final:
                     self.velocity.angular.z = cmd_vel_wall.angular.z
                     self.velocity.linear.x = cmd_vel_wall.linear.x
 
-
-                if np.diff(error_front) == 0 and np.diff(error_diff) != 0:
+                if front > 0.2 and np.diff(error_diff) != 0:
                     self.velocity.linear.x = cmd_vel_line.linear.x
                     self.velocity.angular.z = cmd_vel_line.angular.z
                     cmd_vel_wall.linear.x = 0
@@ -116,10 +114,12 @@ class Autonomy_Final:
                     Line_Blob += 1
 
                 # Check for stop sign
-                if stop_sign_flag == True and front < stop_sign_threshold:
-                    self.velocity.linear = 0
+                if stop_sign_flag == True and front_stop_sign < stop_sign_threshold and stop_sign_done == False:
+                    self.velocity.linear.x = 0
                     self.velocity.angular.z = 0
+                    self.move_robot(self.velocity)
                     rospy.sleep(3)
+                    stop_sign_done == True
 
                 self.move_robot(self.velocity)
                 previous = error_line
@@ -131,8 +131,7 @@ class Autonomy_Final:
                 print("Line linear velocity is %s" % cmd_vel_line.linear.x)
                 print("Line angular velocity is %s" % cmd_vel_line.angular.x)
                 print("Blob count is %s" % Line_Blob)
-
-
+                print("Stop Sign %s" % stop_sign_flag)
 
             rate.sleep()
 
