@@ -20,5 +20,6 @@ The required videos for assignment 4 can be found inside the folder ```videos```
 ```assignment5b_obstacleavoidance``` - Obstacle Avoidance implementation on a Turtlebot3 running indefinitely in a simulated world.
 
 ```assignment5c_visualtrackingandfollowing``` - Line-following behavior for a Turtlebot3 robot in a simulated Gazebo environment.
+```aue_finals``` - Final class project where our Turtlebot navigates an obstacle course within walls, switches to following a line and comes to a 3 second stop upon detecting a stop-sign.
 
 Specific instructions on each package are inside each directory.
