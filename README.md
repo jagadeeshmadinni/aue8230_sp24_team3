@@ -1,7 +1,12 @@
 # Overview:
 This repository hosts the code and demo results for our team in the project based learning course Autonomy Science & Systems. The course builds up blocks of the Sense-Think-Act paradigm through application on the widely used Turtlebot3 educational robot platform leading up to a captstone project resulting in a semi/fully autonomous navigation of the bot in a defined course. Below is a sample video of some of the cool stuff we got to do in this class.
 
-![Video](https://github.com/jagadeeshmadinni/aue8230_sp24_team3/blob/1600218558c0d3158436a43ccbad74b1a64c4fd3/aue_finals/Complete_run_2x_speed.mp4)
+
+
+https://github.com/jagadeeshmadinni/aue8230_sp24_team3/assets/31152033/a112fb7e-5fe7-432b-801d-56d877dd659b
+
+
+
 
 ## Team Members:
 1. Geeta Koduri
